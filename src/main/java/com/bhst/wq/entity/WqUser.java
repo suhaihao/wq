@@ -140,8 +140,18 @@ public class WqUser {
     private String nation;
 
     @ApiModelProperty("服务类型")
-    @TableField(value = "servicType")
-    private String servicType;
+    @TableField(value = "service_type")
+    private String serviceType;
+
+    @ApiModelProperty("服务时长")
+    @TableField(value = "service_duration")
+    private String serviceDuration;
+
+    @ApiModelProperty("志愿者编号")
+    @TableField(value = "volunter_id")
+    private Integer volunterId;
+
+
 
 
 }

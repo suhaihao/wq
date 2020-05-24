@@ -116,7 +116,13 @@ public class WqUserResponse {
     private String nation;
 
     @ApiModelProperty("服务类型")
-    private String servicType;
+    private String serviceType;
+
+    @ApiModelProperty("服务时长")
+    private String serviceDuration;
+
+    @ApiModelProperty("服务时长")
+    private String volunterId;
 
 
 }

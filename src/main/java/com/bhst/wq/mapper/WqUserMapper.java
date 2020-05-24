@@ -15,6 +15,6 @@ public interface WqUserMapper extends BaseMapper<WqUser> {
      * @param page
      * @return
      */
-    @Select(value = "select (@r :=@r + 1) as rowNum,s.* from wq_user s,(select @r := 0) r order by s.integral desc")
+    @Select(value = "select (@r :=@r + 1) as rowNum,s.* from wq_user s,(select @r := 0) r order by s.service_duration desc")
     IPage<WqUserResponse> getRankingByPageList(Page page);
 }
