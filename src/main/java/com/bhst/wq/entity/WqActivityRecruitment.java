@@ -41,7 +41,7 @@ public class WqActivityRecruitment{
 
     @ApiModelProperty("总人数")
     @TableField(value = "total_num")
-    private Integer totalNum;
+    private String totalNum;
 
     @ApiModelProperty("联系人")
     @TableField(value = "contacts")
