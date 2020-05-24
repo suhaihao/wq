@@ -27,6 +27,9 @@ public class WqVolunteerStyleServiceImpl extends ServiceImpl<WqVolunteerStyleMap
     public IPage<WqVolunteerStyle> getPageList(WqVolunteerStylePageListRequest request) {
         Page<WqVolunteerStyle> page = new Page<>(request.getPageIndex(), request.getPageSize());
         QueryWrapper<WqVolunteerStyle> queryWrapperUser = new QueryWrapper();
+        if (null != request.getType()) {
+            queryWrapperUser.eq("type", request.getType());
+        }
         queryWrapperUser.orderByDesc("create_time");
         return wqVolunteerStyleMapper.selectPage(page, queryWrapperUser);
     }

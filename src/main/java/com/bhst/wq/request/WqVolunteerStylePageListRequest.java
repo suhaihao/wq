@@ -10,6 +10,9 @@ import lombok.EqualsAndHashCode;
 @ApiModel("志愿风采列表请求体")
 public class WqVolunteerStylePageListRequest {
 
+    @ApiModelProperty("类型")
+    private Integer type ;
+
     @ApiModelProperty("页数")
     private int pageIndex = 1;
 
