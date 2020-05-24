@@ -149,7 +149,7 @@ public class WqUser {
 
     @ApiModelProperty("志愿者编号")
     @TableField(value = "volunter_id")
-    private Integer volunterId;
+    private String volunterId;
 
 
 
