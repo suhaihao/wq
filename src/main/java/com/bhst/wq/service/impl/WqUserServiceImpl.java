@@ -8,6 +8,7 @@ import com.bhst.wq.entity.WqUser;
 import com.bhst.wq.mapper.WqUserMapper;
 import com.bhst.wq.request.WqUserDetailDelRequest;
 import com.bhst.wq.request.WqUserPageListRequest;
+import com.bhst.wq.response.WqUserResponse;
 import com.bhst.wq.service.WqUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,12 @@ public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> impleme
     @Override
     public Boolean delById(WqUserDetailDelRequest request) {
         return wqUserMapper.deleteById(request.getId()) > 0;
+    }
+
+    @Override
+    public IPage<WqUserResponse> getRankingPageList(WqUserPageListRequest request) {
+        Page<WqUserResponse> page = new Page<>(request.getPageIndex(), request.getPageSize());
+        return wqUserMapper.getRankingByPageList(page);
     }
 
 }

@@ -5,6 +5,7 @@ import com.bhst.wq.entity.WqTeam;
 import com.bhst.wq.request.WqTeamAddRequest;
 import com.bhst.wq.request.WqTeamDetailDelRequest;
 import com.bhst.wq.request.WqTeamPageListRequest;
+import com.bhst.wq.response.WqTeamResponse;
 import com.bhst.wq.service.WqTeamService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,6 +52,12 @@ public class WqTeamController {
     @ApiOperation(value = "获取团队详情")
     public WqTeam detail(@Valid @RequestBody WqTeamDetailDelRequest request) {
         return wqTeamService.getById(request);
+    }
+
+    @PostMapping("/ranking")
+    @ApiOperation(value = "获取团队排行")
+    public IPage<WqTeamResponse> ranking(@Valid @RequestBody WqTeamPageListRequest request) {
+        return wqTeamService.getByRanking(request);
     }
 
 }

@@ -2,9 +2,12 @@ package com.bhst.wq.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bhst.wq.entity.WqUser;
+import com.bhst.wq.request.WqTeamPageListRequest;
 import com.bhst.wq.request.WqUserAddRequest;
 import com.bhst.wq.request.WqUserDetailDelRequest;
 import com.bhst.wq.request.WqUserPageListRequest;
+import com.bhst.wq.response.WqTeamResponse;
+import com.bhst.wq.response.WqUserResponse;
 import com.bhst.wq.service.WqUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,4 +56,9 @@ public class WqUserController {
         return wqUserService.getById(request);
     }
 
+    @PostMapping("/ranking")
+    @ApiOperation(value = "获取团队排行")
+    public IPage<WqUserResponse> ranking(@Valid @RequestBody WqUserPageListRequest request) {
+        return wqUserService.getRankingPageList(request);
+    }
 }

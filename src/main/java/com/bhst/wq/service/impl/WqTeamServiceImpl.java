@@ -8,6 +8,7 @@ import com.bhst.wq.entity.WqTeam;
 import com.bhst.wq.mapper.WqTeamMapper;
 import com.bhst.wq.request.WqTeamDetailDelRequest;
 import com.bhst.wq.request.WqTeamPageListRequest;
+import com.bhst.wq.response.WqTeamResponse;
 import com.bhst.wq.service.WqTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,12 @@ public class WqTeamServiceImpl extends ServiceImpl<WqTeamMapper, WqTeam> impleme
     @Override
     public Boolean delById(WqTeamDetailDelRequest request) {
         return wqTeamMapper.deleteById(request.getId()) > 0;
+    }
+
+    @Override
+    public IPage<WqTeamResponse> getByRanking(WqTeamPageListRequest request) {
+        Page<WqTeamResponse> page = new Page<>(request.getPageIndex(), request.getPageSize());
+        return wqTeamMapper.getRankingByPageList(page);
     }
 
 }
