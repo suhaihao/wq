@@ -1,5 +1,6 @@
 package com.bhst.wq.request;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,5 +23,10 @@ public class WqPunchManagementAddRequest {
     @ApiModelProperty("打卡二维码信息")
     private String punchCode;
 
+    @ApiModelProperty("状态")
+    private String status;
+
+    @ApiModelProperty("是否签到")
+    private String signUp;
 
 }

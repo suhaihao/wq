@@ -41,4 +41,9 @@ public class WqPunchManagementServiceImpl extends ServiceImpl<WqPunchManagementM
         return wqPunchManagementMapper.deleteById(request.getId()) > 0;
     }
 
+    @Override
+    public WqPunchManagement selectOneByTime(QueryWrapper<WqPunchManagement> queryWrapper) {
+        return wqPunchManagementMapper.selectOne(queryWrapper);
+    }
+
 }

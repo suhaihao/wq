@@ -1,5 +1,6 @@
 package com.bhst.wq.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bhst.wq.entity.WqPunchManagement;
@@ -28,4 +29,11 @@ public interface WqPunchManagementService extends IService<WqPunchManagement> {
      * @return
      */
     Boolean delById(WqPunchManagementDetailDelRequest request);
+
+    /**
+     * 根据条件获取唯一
+     * @param queryWrapper
+     * @return
+     */
+    WqPunchManagement selectOneByTime(QueryWrapper<WqPunchManagement> queryWrapper);
 }
