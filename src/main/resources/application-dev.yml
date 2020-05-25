@@ -1,5 +1,5 @@
 server:
-  port: 1445
+  port: 8006
   datasource:
   servlet:
     context-path: /
