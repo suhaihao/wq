@@ -45,8 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().authenticationEntryPoint(ajaxAuthenticationEntryPoint)
 
                 .and()
-                .authorizeRequests()
 
+                .authorizeRequests()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
                 .anyRequest()
                 .authenticated()// 其他 url 需要身份认证
 

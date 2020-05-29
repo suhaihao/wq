@@ -3,6 +3,7 @@ package com.bhst.wq.config.security;
 import com.alibaba.druid.support.json.JSONUtils;
 import com.bhst.wq.enumData.ExceptionEnum;
 import com.bhst.wq.response.ResultBean;
+import com.bhst.wq.utils.JsonUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,8 @@ public class AjaxLogoutSuccessHandler implements LogoutSuccessHandler {
         ResultBean responseBody = new ResultBean();
         responseBody.setCode(ExceptionEnum.SUCCESS.getCode());
         responseBody.setMsg(ExceptionEnum.SUCCESS.getMsg());
-        //删除token信息
-        httpServletResponse.getWriter().write(JSONUtils.toJSONString(responseBody));
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setContentType("application/json");
+        httpServletResponse.getWriter().write(JsonUtils.toJson(responseBody));
     }
 }
