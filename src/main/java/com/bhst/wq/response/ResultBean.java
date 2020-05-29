@@ -29,6 +29,8 @@ public class ResultBean<T> {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime time = LocalDateTime.now();
 
+    public ResultBean() {
+    }
     public ResultBean(T data) {
         this(ExceptionEnum.SUCCESS.getCode(), ExceptionEnum.SUCCESS.getMsg(), data);
     }

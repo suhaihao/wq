@@ -27,4 +27,11 @@ public interface WqActivityRecruitmentService extends IService<WqActivityRecruit
      * @return
      */
     Boolean delById(WqActivityRecruitmentDetailDelRequest wqActivityRecruitmentDetailDelRequest);
+
+    /**
+     * 点赞次数
+     * @param request
+     * @return
+     */
+    Boolean addLikeActivityRecruitment(WqActivityRecruitmentDetailDelRequest request);
 }

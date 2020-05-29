@@ -44,4 +44,9 @@ public class WqActivityRecruitmentServiceImpl extends ServiceImpl<WqActivityRecr
     public Boolean delById(WqActivityRecruitmentDetailDelRequest wqActivityRecruitmentDetailDelRequest) {
         return wqActivityRecruitmentMapper.deleteById(wqActivityRecruitmentDetailDelRequest.getId()) > 0;
     }
+
+    @Override
+    public Boolean addLikeActivityRecruitment(WqActivityRecruitmentDetailDelRequest request) {
+        return wqActivityRecruitmentMapper.addLikes(request.getId(), request.getLikes()) > 0;
+    }
 }

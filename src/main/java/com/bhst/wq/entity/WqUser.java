@@ -14,14 +14,20 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel("用户")
 @TableName("wq_user")
-public class WqUser {
+public class WqUser implements UserDetails, Serializable {
 
     @ApiModelProperty("唯一id")
     @TableId(value = "id", type = IdType.AUTO)
@@ -151,7 +157,43 @@ public class WqUser {
     @TableField(value = "volunter_id")
     private String volunterId;
 
+    private Set<? extends GrantedAuthority> authorities;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
 
+    public void setAuthorities(Set<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
+    @Override
+    public String getUsername() {
+        if (!StringUtils.isEmpty(phone)) {
+            return phone;
+        } else {
+            return volunterId;
+        }
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

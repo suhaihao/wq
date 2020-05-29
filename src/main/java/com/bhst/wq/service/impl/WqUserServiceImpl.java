@@ -11,10 +11,19 @@ import com.bhst.wq.request.WqUserPageListRequest;
 import com.bhst.wq.response.WqUserResponse;
 import com.bhst.wq.service.WqUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
-public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> implements WqUserService {
+public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> implements WqUserService, UserDetailsService {
 
     private final WqUserMapper wqUserMapper;
 
@@ -48,4 +57,34 @@ public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> impleme
         return wqUserMapper.getRankingByPageList(page);
     }
 
+    @Override
+    public WqUser loginByUserName(String userName) {
+        QueryWrapper<WqUser> queryWrapper = new QueryWrapper<>();
+        if (userName.length() > 11) {
+            queryWrapper.eq("volunter_id", userName);
+        } else {
+            queryWrapper.eq("phone", userName);
+        }
+        WqUser wqUser = wqUserMapper.selectOne(queryWrapper);
+        return wqUser;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        QueryWrapper<WqUser> queryWrapper = new QueryWrapper<>();
+        if (username.length() > 11) {
+            queryWrapper.eq("volunter_id", username);
+        } else {
+            queryWrapper.eq("phone", username);
+        }
+        WqUser wqUser = wqUserMapper.selectOne(queryWrapper);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String ps = encoder.encode("123");
+        wqUser.setPassword(ps);
+        Set authoritiesSet = new HashSet();
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_ADMIN");
+        authoritiesSet.add(authority);
+        wqUser.setAuthorities(authoritiesSet);
+        return wqUser;
+    }
 }

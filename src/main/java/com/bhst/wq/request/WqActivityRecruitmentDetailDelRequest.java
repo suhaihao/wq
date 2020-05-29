@@ -17,6 +17,7 @@ public class WqActivityRecruitmentDetailDelRequest {
     private Integer id;
 
 
-
+    @ApiModelProperty("点赞次数")
+    private Integer likes;
 
 }

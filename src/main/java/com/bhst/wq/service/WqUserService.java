@@ -37,4 +37,11 @@ public interface WqUserService extends IService<WqUser> {
      * @return
      */
     IPage<WqUserResponse> getRankingPageList(WqUserPageListRequest request);
+
+    /**
+     * 根据名称获取唯一用户
+     * @param userName
+     * @return
+     */
+    WqUser loginByUserName(String userName);
 }

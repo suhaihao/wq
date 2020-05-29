@@ -21,12 +21,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel("活动招募")
 @TableName("wq_activity_recruitment")
-public class WqActivityRecruitment{
+public class WqActivityRecruitment {
 
     @ApiModelProperty("唯一id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-    
+
     @ApiModelProperty("标题")
     @TableField(value = "title")
     private String title;
@@ -106,6 +106,10 @@ public class WqActivityRecruitment{
     @ApiModelProperty("活动状态 0招募中 1 进行中 -1已结束")
     @TableField(value = "status")
     private Integer status;
+
+    @ApiModelProperty("喜欢次数")
+    @TableField(value = "status")
+    private Integer likes;
 
 
 }

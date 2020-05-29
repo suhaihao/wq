@@ -55,4 +55,10 @@ public class WqActivityRecruitmentController {
         return wqActivityRecruitmentService.getById(request);
     }
 
+    @PostMapping("/like")
+    @ApiOperation(value = "给活动点赞")
+    public Boolean likeWqActivityRecruitment(@Valid @RequestBody WqActivityRecruitmentDetailDelRequest request) {
+        return wqActivityRecruitmentService.addLikeActivityRecruitment(request);
+    }
+
 }
