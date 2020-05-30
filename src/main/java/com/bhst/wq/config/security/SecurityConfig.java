@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .formLogin()  //开启登录
-                .loginPage("")
                 .successHandler(ajaxAuthenticationSuccessHandler) // 登录成功
                 .failureHandler(ajaxAuthenticationFailureHandler) // 登录失败
                 .permitAll()
