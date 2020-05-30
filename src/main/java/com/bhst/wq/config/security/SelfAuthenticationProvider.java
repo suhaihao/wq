@@ -20,20 +20,20 @@ public class SelfAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String userName = (String) authentication.getPrincipal();
+        String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String ps = encoder.encode(password);
 
-        WqUser wqUser = wqUserService.loginByUserName(userName);
+        WqUser wqUser = wqUserService.loginByUserName(username);
         if (!StringUtils.isEmpty(wqUser.getPassword())) {
             if (!wqUser.getPassword().equals(ps)) {
                 throw new BadCredentialsException("用户名密码不正确，请重新登陆！");
             }
         }
 
-        return new UsernamePasswordAuthenticationToken(userName, password, wqUser.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(username, password, wqUser.getAuthorities());
     }
 
     @Override
