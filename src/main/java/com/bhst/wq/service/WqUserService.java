@@ -6,8 +6,9 @@ import com.bhst.wq.entity.WqUser;
 import com.bhst.wq.request.WqUserDetailDelRequest;
 import com.bhst.wq.request.WqUserPageListRequest;
 import com.bhst.wq.response.WqUserResponse;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface WqUserService extends IService<WqUser> {
+public interface WqUserService extends IService<WqUser>, UserDetailsService {
 
 
     /**
@@ -40,6 +41,7 @@ public interface WqUserService extends IService<WqUser> {
 
     /**
      * 根据名称获取唯一用户
+     *
      * @param userName
      * @return
      */

@@ -1,5 +1,6 @@
 package com.bhst.wq.config.security;
 
+import com.bhst.wq.config.security.token.LindTokenAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -26,15 +27,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SelfAuthenticationProvider selfAuthenticationProvider;
 
+    private final LindTokenAuthenticationFilter lindTokenAuthenticationFilter;
+
 
     @Autowired
-    public SecurityConfig(AjaxAuthenticationEntryPoint ajaxAuthenticationEntryPoint, AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler, AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler, AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler, AjaxAccessDeniedHandler ajaxAccessDeniedHandler, SelfAuthenticationProvider selfAuthenticationProvider) {
+    public SecurityConfig(AjaxAuthenticationEntryPoint ajaxAuthenticationEntryPoint, AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler, AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler, AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler, AjaxAccessDeniedHandler ajaxAccessDeniedHandler, SelfAuthenticationProvider selfAuthenticationProvider, LindTokenAuthenticationFilter lindTokenAuthenticationFilter) {
         this.ajaxAuthenticationEntryPoint = ajaxAuthenticationEntryPoint;
         this.ajaxAuthenticationSuccessHandler = ajaxAuthenticationSuccessHandler;
         this.ajaxAuthenticationFailureHandler = ajaxAuthenticationFailureHandler;
         this.ajaxLogoutSuccessHandler = ajaxLogoutSuccessHandler;
         this.ajaxAccessDeniedHandler = ajaxAccessDeniedHandler;
         this.selfAuthenticationProvider = selfAuthenticationProvider;
+        this.lindTokenAuthenticationFilter = lindTokenAuthenticationFilter;
     }
 
 
@@ -75,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/**").permitAll()
                 .anyRequest()
                 .authenticated()// 其他 url 需要身份认证
-
                 .and()
                 .headers().frameOptions().disable()
                 .and()
@@ -87,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessHandler(ajaxLogoutSuccessHandler)
                 .permitAll();
-
+        http.addFilterBefore(lindTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling().accessDeniedHandler(ajaxAccessDeniedHandler); // 无权访问 JSON 格式的数据
 
     }

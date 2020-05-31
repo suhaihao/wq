@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> implements WqUserService, UserDetailsService {
+public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> implements WqUserService {
 
     private final WqUserMapper wqUserMapper;
 
@@ -81,10 +81,6 @@ public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> impleme
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String ps = encoder.encode("123");
         wqUser.setPassword(ps);
-        Set authoritiesSet = new HashSet();
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_ADMIN");
-        authoritiesSet.add(authority);
-        wqUser.setAuthorities(authoritiesSet);
         return wqUser;
     }
 }
