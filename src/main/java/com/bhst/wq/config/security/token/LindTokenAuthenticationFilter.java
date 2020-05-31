@@ -32,7 +32,7 @@ public class LindTokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(this.tokenHeader);
         String username = request.getHeader(this.username);
-        if (StringUtils.isEmpty(authHeader)) {
+        if (!StringUtils.isEmpty(authHeader)) {
             if (SecurityContextHolder.getContext().getAuthentication() == null && !StringUtils.isEmpty(username)) {
                 UserDetails userDetails = this.wqUserService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
@@ -41,8 +41,8 @@ public class LindTokenAuthenticationFilter extends OncePerRequestFilter {
                         request));
                 logger.info("authenticated user " + username + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                filterChain.doFilter(request, response);
             }
+            filterChain.doFilter(request, response);
         } else {
             if (!(request instanceof HttpServletRequest) || !(response instanceof HttpServletResponse)) {
                 throw new ServletException("OncePerRequestFilter just supports HTTP requests");
