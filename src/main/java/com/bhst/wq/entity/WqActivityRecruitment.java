@@ -111,5 +111,9 @@ public class WqActivityRecruitment {
     @TableField(value = "status")
     private Integer likes;
 
+    @ApiModelProperty("是否审核0没有1有")
+    @TableField(value = "is_audit")
+    private Integer isAudit;
+
 
 }

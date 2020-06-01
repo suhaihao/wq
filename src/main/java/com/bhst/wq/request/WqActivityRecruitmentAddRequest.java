@@ -68,5 +68,9 @@ public class WqActivityRecruitmentAddRequest {
     @TableField(value = "status")
     private Integer status;
 
+    @ApiModelProperty("是否审核通过0没通过默认1已通过")
+    @TableField(value = "is_audit")
+    private Integer isAudit;
+
 
 }

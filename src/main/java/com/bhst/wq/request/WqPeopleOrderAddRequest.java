@@ -31,8 +31,8 @@ public class WqPeopleOrderAddRequest {
     @ApiModelProperty("年龄")
     private Integer age;
 
-    @ApiModelProperty("内容")
-    private String content;
+    @ApiModelProperty("是否审核通过")
+    private Integer isAudit;
 
 
 }

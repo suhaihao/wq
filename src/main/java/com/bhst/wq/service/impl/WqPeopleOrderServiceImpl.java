@@ -30,6 +30,11 @@ public class WqPeopleOrderServiceImpl extends ServiceImpl<WqPeopleOrderMapper, W
         if (null != request.getType()) {
             queryWrapperUser.eq("type", request.getType());
         }
+        if (request.getIsRank()) {
+            queryWrapperUser.eq("is_audit", 0);
+        } else {
+            queryWrapperUser.eq("is_audit", 1);
+        }
         queryWrapperUser.orderByDesc("create_time");
         return wqPeopleOrderMapper.selectPage(page, queryWrapperUser);
     }

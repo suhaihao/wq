@@ -157,6 +157,11 @@ public class WqUser implements UserDetails, Serializable {
     @TableField(value = "volunter_id")
     private String volunterId;
 
+    @ApiModelProperty("级别")
+    @TableField(value = "level")
+    private Integer level;
+
+
     @ApiModelProperty("权限集合")
     @TableField(exist = false)
     private Set<? extends GrantedAuthority> authorities;

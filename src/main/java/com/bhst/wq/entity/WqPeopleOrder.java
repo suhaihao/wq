@@ -79,9 +79,7 @@ public class WqPeopleOrder {
     @TableField(value = "age")
     private Integer age;
 
-    @ApiModelProperty("内容")
-    @TableField(value = "content")
-    private String content;
-
-
+    @ApiModelProperty("是否审核0没有1有")
+    @TableField(value = "is_audit")
+    private Integer isAudit;
 }

@@ -13,4 +13,12 @@ public class UserUtils {
         }
         return null;
     }
+
+    public static Integer getUserLeve() {
+        WqUser user = (WqUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (null != user) {
+            return user.getLevel();
+        }
+        return null;
+    }
 }

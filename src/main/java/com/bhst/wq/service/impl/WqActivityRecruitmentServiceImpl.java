@@ -37,6 +37,11 @@ public class WqActivityRecruitmentServiceImpl extends ServiceImpl<WqActivityRecr
         if (null != request.getStatus()) {
             queryWrapperUser.eq("status", request.getStatus());
         }
+        if (request.getIsRank()) {
+            queryWrapperUser.eq("is_audit", 0);
+        } else {
+            queryWrapperUser.eq("is_audit", 1);
+        }
         queryWrapperUser.orderByDesc("create_time");
         return wqActivityRecruitmentMapper.selectPage(page, queryWrapperUser);
     }
