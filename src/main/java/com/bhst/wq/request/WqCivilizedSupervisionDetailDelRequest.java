@@ -14,4 +14,7 @@ public class WqCivilizedSupervisionDetailDelRequest {
     @NotNull
     @ApiModelProperty("唯一id")
     private Integer id;
+
+    @ApiModelProperty("点赞次数")
+    private Integer dislikes;
 }

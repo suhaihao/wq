@@ -41,4 +41,9 @@ public class WqCivilizedSupervisionServiceImpl extends ServiceImpl<WqCivilizedSu
         return wqCivilizedSupervisionMapper.deleteById(request.getId()) > 0;
     }
 
+    @Override
+    public Boolean addDislikes(WqCivilizedSupervisionDetailDelRequest request) {
+        return wqCivilizedSupervisionMapper.addLikes(request.getDislikes(), request.getId()) > 0;
+    }
+
 }

@@ -11,6 +11,7 @@ import com.bhst.wq.request.WqPunchManagementDetailDelRequest;
 import com.bhst.wq.request.WqPunchManagementPageListRequest;
 import com.bhst.wq.service.WqActivityRecruitmentService;
 import com.bhst.wq.service.WqPunchManagementService;
+import com.bhst.wq.utils.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -73,7 +74,7 @@ public class WqPunchManagementController {
             LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
             QueryWrapper<WqPunchManagement> queryWrapper = new QueryWrapper();
             queryWrapper.eq("activity_id", request.getActivityId());
-            queryWrapper.eq("user_id", request.getUserId());
+            queryWrapper.eq("user_id", UserUtils.getUserId());
             queryWrapper.between("create_time", today_start, today_end);
             WqPunchManagement wqPunchManagement = wqPunchManagementService.selectOneByTime(queryWrapper);
             if (null != wqPunchManagement) {
@@ -97,7 +98,7 @@ public class WqPunchManagementController {
                     wqPunchManagement.setDuration(String.valueOf(time));
                     wqPunchManagementService.updateById(wqPunchManagement);
                     //更新用户积分
-                    WqUser wqUser = wqUserMapper.selectById(request.getUserId());
+                    WqUser wqUser = wqUserMapper.selectById(UserUtils.getUserId());
                     if (null != wqUser) {
                         wqUser.setIntegral((int) time / 60 / 60 + 1);
                         wqUser.setServiceDuration(wqUser.getServiceDuration() + time);

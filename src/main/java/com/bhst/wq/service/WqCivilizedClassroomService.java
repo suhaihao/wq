@@ -28,4 +28,11 @@ public interface WqCivilizedClassroomService extends IService<WqCivilizedClassro
      * @return
      */
     Boolean delById(WqCivilizedClassroomDetailDelRequest request);
+
+    /**
+     * 点赞
+     * @param request
+     * @return
+     */
+    Boolean addLikeById(WqCivilizedClassroomDetailDelRequest request);
 }

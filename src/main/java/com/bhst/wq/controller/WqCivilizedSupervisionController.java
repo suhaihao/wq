@@ -2,10 +2,13 @@ package com.bhst.wq.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bhst.wq.entity.WqCivilizedSupervision;
+import com.bhst.wq.entity.WqLikesRecord;
 import com.bhst.wq.request.WqCivilizedSupervisionAddRequest;
 import com.bhst.wq.request.WqCivilizedSupervisionDetailDelRequest;
 import com.bhst.wq.request.WqCivilizedSupervisionPageListRequest;
 import com.bhst.wq.service.WqCivilizedSupervisionService;
+import com.bhst.wq.service.WqLikesRecordService;
+import com.bhst.wq.utils.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -21,10 +24,12 @@ import javax.validation.Valid;
 public class WqCivilizedSupervisionController {
 
     private final WqCivilizedSupervisionService wqCivilizedSupervisionService;
+    private final WqLikesRecordService wqLikesRecordService;
 
     @Autowired
-    public WqCivilizedSupervisionController(WqCivilizedSupervisionService wqCivilizedSupervisionService) {
+    public WqCivilizedSupervisionController(WqCivilizedSupervisionService wqCivilizedSupervisionService, WqLikesRecordService wqLikesRecordService) {
         this.wqCivilizedSupervisionService = wqCivilizedSupervisionService;
+        this.wqLikesRecordService = wqLikesRecordService;
     }
 
     @PostMapping("/getPageList")
@@ -51,6 +56,18 @@ public class WqCivilizedSupervisionController {
     @ApiOperation(value = "获取文明监督详情")
     public WqCivilizedSupervision detail(@Valid @RequestBody WqCivilizedSupervisionDetailDelRequest request) {
         return wqCivilizedSupervisionService.getById(request);
+    }
+
+    @PostMapping("/addLike")
+    @ApiOperation(value = "点赞")
+    public Boolean addLike(@Valid @RequestBody WqCivilizedSupervisionDetailDelRequest request) {
+        WqLikesRecord wqLikesRecord = new WqLikesRecord();
+        wqLikesRecord.setType(3);
+        wqLikesRecord.setTypeId(request.getId());
+        wqLikesRecord.setUserId(UserUtils.getUserId());
+        wqLikesRecord.setSize(request.getDislikes());
+        wqLikesRecordService.save(wqLikesRecord);
+        return wqCivilizedSupervisionService.addDislikes(request);
     }
 
 }

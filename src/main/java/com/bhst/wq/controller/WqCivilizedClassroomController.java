@@ -55,4 +55,10 @@ public class WqCivilizedClassroomController {
         return wqCivilizedClassroomService.getById(request);
     }
 
+    @PostMapping("/addLike")
+    @ApiOperation(value = "点赞")
+    public Boolean addLike(@Valid @RequestBody WqCivilizedClassroomDetailDelRequest request) {
+        return wqCivilizedClassroomService.addLikeById(request);
+    }
+
 }

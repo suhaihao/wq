@@ -5,10 +5,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bhst.wq.entity.WqActivityRecruitment;
+import com.bhst.wq.entity.WqLikesRecord;
 import com.bhst.wq.mapper.WqActivityRecruitmentMapper;
 import com.bhst.wq.request.WqActivityRecruitmentDetailDelRequest;
 import com.bhst.wq.request.WqActivityRecruitmentPageListRequest;
 import com.bhst.wq.service.WqActivityRecruitmentService;
+import com.bhst.wq.service.WqLikesRecordService;
+import com.bhst.wq.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,13 @@ public class WqActivityRecruitmentServiceImpl extends ServiceImpl<WqActivityRecr
 
     private final WqActivityRecruitmentMapper wqActivityRecruitmentMapper;
 
+    private final WqLikesRecordService wqLikesRecordService;
+
 
     @Autowired
-    public WqActivityRecruitmentServiceImpl(WqActivityRecruitmentMapper wqActivityRecruitmentMapper) {
+    public WqActivityRecruitmentServiceImpl(WqActivityRecruitmentMapper wqActivityRecruitmentMapper, WqLikesRecordService wqLikesRecordService) {
         this.wqActivityRecruitmentMapper = wqActivityRecruitmentMapper;
+        this.wqLikesRecordService = wqLikesRecordService;
     }
 
 
@@ -47,6 +53,12 @@ public class WqActivityRecruitmentServiceImpl extends ServiceImpl<WqActivityRecr
 
     @Override
     public Boolean addLikeActivityRecruitment(WqActivityRecruitmentDetailDelRequest request) {
+        WqLikesRecord wqLikesRecord = new WqLikesRecord();
+        wqLikesRecord.setType(2);
+        wqLikesRecord.setTypeId(request.getId());
+        wqLikesRecord.setUserId(UserUtils.getUserId());
+        wqLikesRecord.setSize(request.getLikes());
+        wqLikesRecordService.save(wqLikesRecord);
         return wqActivityRecruitmentMapper.addLikes(request.getId(), request.getLikes()) > 0;
     }
 }

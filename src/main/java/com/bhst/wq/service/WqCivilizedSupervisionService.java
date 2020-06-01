@@ -28,4 +28,12 @@ public interface WqCivilizedSupervisionService extends IService<WqCivilizedSuper
      * @return
      */
     Boolean delById(WqCivilizedSupervisionDetailDelRequest request);
+
+    /**
+     * 添加点赞
+     * @param request
+     * @return
+     */
+    Boolean addDislikes(WqCivilizedSupervisionDetailDelRequest request);
+
 }

@@ -16,7 +16,8 @@ public class WqCivilizedClassroomDetailDelRequest {
     @ApiModelProperty("唯一id")
     private Integer id;
 
-
+    @ApiModelProperty("点赞次数")
+    private Integer likes;
 
 
 }

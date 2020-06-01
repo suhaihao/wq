@@ -2,6 +2,7 @@ package com.bhst.wq.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bhst.wq.entity.WqActivityRecruitment;
+import com.bhst.wq.entity.WqUser;
 import com.bhst.wq.request.WqActivityRecruitmentAddRequest;
 import com.bhst.wq.request.WqActivityRecruitmentDetailDelRequest;
 import com.bhst.wq.request.WqActivityRecruitmentPageListRequest;
@@ -10,6 +11,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
