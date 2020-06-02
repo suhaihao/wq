@@ -14,6 +14,9 @@ import com.bhst.wq.service.WqLikesRecordService;
 import com.bhst.wq.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.beans.Transient;
 
 @Service
 public class WqActivityRecruitmentServiceImpl extends ServiceImpl<WqActivityRecruitmentMapper, WqActivityRecruitment> implements WqActivityRecruitmentService {
@@ -57,6 +60,7 @@ public class WqActivityRecruitmentServiceImpl extends ServiceImpl<WqActivityRecr
     }
 
     @Override
+    @Transactional
     public Boolean addLikeActivityRecruitment(WqActivityRecruitmentDetailDelRequest request) {
         WqLikesRecord wqLikesRecord = new WqLikesRecord();
         wqLikesRecord.setType(2);
@@ -64,6 +68,6 @@ public class WqActivityRecruitmentServiceImpl extends ServiceImpl<WqActivityRecr
         wqLikesRecord.setUserId(UserUtils.getUserId());
         wqLikesRecord.setSize(request.getLikes());
         wqLikesRecordService.save(wqLikesRecord);
-        return wqActivityRecruitmentMapper.addLikes(request.getId(), request.getLikes()) > 0;
+        return wqActivityRecruitmentMapper.addLikes(request.getLikes(), request.getId()) > 0;
     }
 }
