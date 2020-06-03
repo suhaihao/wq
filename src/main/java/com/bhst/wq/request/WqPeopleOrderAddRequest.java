@@ -34,5 +34,12 @@ public class WqPeopleOrderAddRequest {
     @ApiModelProperty("是否审核通过")
     private Integer isAudit;
 
+    @ApiModelProperty("性别")
+    private Integer sex;
+
+    @ApiModelProperty("用户id")
+    private Integer userId;
+
+
 
 }

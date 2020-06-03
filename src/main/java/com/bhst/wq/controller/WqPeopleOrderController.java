@@ -41,9 +41,6 @@ public class WqPeopleOrderController {
         WqPeopleOrder wqPeopleOrder = new WqPeopleOrder();
         BeanUtils.copyProperties(request, wqPeopleOrder);
         wqPeopleOrder.setUpdateTime(LocalDateTime.now());
-        wqPeopleOrder.setSex(UserUtils.getUser().getSex());
-        wqPeopleOrder.setName(UserUtils.getUser().getFullname());
-        wqPeopleOrder.setUserId(UserUtils.getUser().getId());
         return wqPeopleOrderService.saveOrUpdate(wqPeopleOrder);
     }
 
