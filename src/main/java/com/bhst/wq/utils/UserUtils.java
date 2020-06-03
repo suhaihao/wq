@@ -21,4 +21,12 @@ public class UserUtils {
         }
         return null;
     }
+
+    public static WqUser getUser() {
+        WqUser user = (WqUser) SecurityContextHolder.getContext().getAuthentication();
+        if (null != user) {
+            return user;
+        }
+        return null;
+    }
 }

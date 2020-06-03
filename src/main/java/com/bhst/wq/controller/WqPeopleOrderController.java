@@ -6,6 +6,7 @@ import com.bhst.wq.request.WqPeopleOrderAddRequest;
 import com.bhst.wq.request.WqPeopleOrderDetailDelRequest;
 import com.bhst.wq.request.WqPeopleOrderPageListRequest;
 import com.bhst.wq.service.WqPeopleOrderService;
+import com.bhst.wq.utils.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -40,6 +41,7 @@ public class WqPeopleOrderController {
         WqPeopleOrder wqPeopleOrder = new WqPeopleOrder();
         BeanUtils.copyProperties(request, wqPeopleOrder);
         wqPeopleOrder.setUpdateTime(LocalDateTime.now());
+        wqPeopleOrder.setSex(UserUtils.getUser().getSex());
         return wqPeopleOrderService.saveOrUpdate(wqPeopleOrder);
     }
 

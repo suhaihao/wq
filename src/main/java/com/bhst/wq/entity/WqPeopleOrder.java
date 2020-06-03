@@ -82,4 +82,9 @@ public class WqPeopleOrder {
     @ApiModelProperty("是否审核0没有1有")
     @TableField(value = "is_audit")
     private Integer isAudit;
+
+    @ApiModelProperty("性别")
+    @TableField(value = "sex")
+    private String sex;
+
 }
