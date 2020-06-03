@@ -13,8 +13,8 @@ public class WqPeopleOrderPageListRequest {
     @ApiModelProperty("类型")
     private Integer type;
 
-    @ApiModelProperty("用户id")
-    private Integer userId;
+    @ApiModelProperty("是否查询当前用户")
+    private Boolean isUser;
 
     @ApiModelProperty("页数")
     private int pageIndex = 1;

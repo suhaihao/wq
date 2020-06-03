@@ -9,6 +9,7 @@ import com.bhst.wq.mapper.WqPeopleOrderMapper;
 import com.bhst.wq.request.WqPeopleOrderDetailDelRequest;
 import com.bhst.wq.request.WqPeopleOrderPageListRequest;
 import com.bhst.wq.service.WqPeopleOrderService;
+import com.bhst.wq.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,8 @@ public class WqPeopleOrderServiceImpl extends ServiceImpl<WqPeopleOrderMapper, W
         } else {
             queryWrapperUser.eq("is_audit", 1);
         }
-        if (null != request.getUserId()) {
-            queryWrapperUser.eq("user_id", request.getUserId());
+        if (request.getIsUser()) {
+            queryWrapperUser.eq("user_id", UserUtils.getUserId());
         }
         queryWrapperUser.orderByDesc("create_time");
         return wqPeopleOrderMapper.selectPage(page, queryWrapperUser);
