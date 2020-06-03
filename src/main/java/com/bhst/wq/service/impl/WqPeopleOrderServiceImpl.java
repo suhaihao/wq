@@ -35,6 +35,9 @@ public class WqPeopleOrderServiceImpl extends ServiceImpl<WqPeopleOrderMapper, W
         } else {
             queryWrapperUser.eq("is_audit", 1);
         }
+        if (null != request.getUserId()) {
+            queryWrapperUser.eq("user_id", request.getUserId());
+        }
         queryWrapperUser.orderByDesc("create_time");
         return wqPeopleOrderMapper.selectPage(page, queryWrapperUser);
     }
