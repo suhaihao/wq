@@ -41,8 +41,19 @@ public class WqPeopleOrderController {
         WqPeopleOrder wqPeopleOrder = new WqPeopleOrder();
         BeanUtils.copyProperties(request, wqPeopleOrder);
         wqPeopleOrder.setUpdateTime(LocalDateTime.now());
-        wqPeopleOrder.setUserId(UserUtils.getUserId());
+        wqPeopleOrder.setCreateBy(String.valueOf(UserUtils.getUserId()));
         return wqPeopleOrderService.saveOrUpdate(wqPeopleOrder);
+    }
+
+    @PostMapping("/ExecuteOrder")
+    @ApiOperation(value = "执行订单")
+    public Boolean ExecuteOrder(@Valid @RequestBody WqPeopleOrderDetailDelRequest request) {
+        WqPeopleOrder byId = wqPeopleOrderService.getById(request);
+        if (null != request.getIsPass() && request.getIsPass()) {
+            byId.setIsAudit(1);
+            return wqPeopleOrderService.saveOrUpdate(byId);
+        }
+        return false;
     }
 
     @PostMapping("/del")
