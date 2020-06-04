@@ -161,6 +161,9 @@ public class WqUser implements UserDetails, Serializable {
     @TableField(value = "level")
     private Integer level;
 
+    @ApiModelProperty("团队名称")
+    @TableField(value = "team_name")
+    private String teamName;
 
     @ApiModelProperty("权限集合")
     @TableField(exist = false)
