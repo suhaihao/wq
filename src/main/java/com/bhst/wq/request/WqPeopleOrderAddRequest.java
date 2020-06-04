@@ -37,9 +37,5 @@ public class WqPeopleOrderAddRequest {
     @ApiModelProperty("性别")
     private String sex;
 
-    @ApiModelProperty("用户id")
-    private Integer userId;
-
-
 
 }
