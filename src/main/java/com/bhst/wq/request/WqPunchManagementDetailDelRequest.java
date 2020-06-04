@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel("打卡详情请求体")
 public class WqPunchManagementDetailDelRequest {
-    @NotNull
+    @NotNull(message = "活动id不能为空")
     @ApiModelProperty("唯一id")
     private Integer id;
 }
