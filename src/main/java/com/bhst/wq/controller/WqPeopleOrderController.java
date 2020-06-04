@@ -44,7 +44,10 @@ public class WqPeopleOrderController {
         if (null == wqPeopleOrder.getId()) {
             wqPeopleOrder.setCreateBy(String.valueOf(UserUtils.getUserId()));
         } else {
-            wqPeopleOrder.setUserId(UserUtils.getUserId());
+            WqPeopleOrder byId = wqPeopleOrderService.getById(wqPeopleOrder.getId());
+            if (null == byId) {
+                wqPeopleOrder.setUserId(UserUtils.getUserId());
+            }
         }
         return wqPeopleOrderService.saveOrUpdate(wqPeopleOrder);
     }
