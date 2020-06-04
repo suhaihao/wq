@@ -25,6 +25,6 @@ public class WqPeopleOrderPageListRequest {
     @ApiModelProperty("分页大小")
     private int pageSize = 20;
 
-    @ApiModelProperty("是否显示级别")
+    @ApiModelProperty("是否需要审核")
     private Boolean isRank;
 }
