@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.bhst.wq.entity.WqPeopleOrder;
 import com.bhst.wq.request.WqPeopleOrderDetailDelRequest;
 import com.bhst.wq.request.WqPeopleOrderPageListRequest;
+import com.bhst.wq.response.WqPeopleOrderResponse;
 
 public interface WqPeopleOrderService extends IService<WqPeopleOrder> {
 
@@ -21,7 +22,7 @@ public interface WqPeopleOrderService extends IService<WqPeopleOrder> {
      * @param request
      * @return
      */
-    WqPeopleOrder getById(WqPeopleOrderDetailDelRequest request);
+    WqPeopleOrderResponse getById(WqPeopleOrderDetailDelRequest request);
 
     /**
      * @param request

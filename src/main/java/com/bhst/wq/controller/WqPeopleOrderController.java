@@ -5,6 +5,7 @@ import com.bhst.wq.entity.WqPeopleOrder;
 import com.bhst.wq.request.WqPeopleOrderAddRequest;
 import com.bhst.wq.request.WqPeopleOrderDetailDelRequest;
 import com.bhst.wq.request.WqPeopleOrderPageListRequest;
+import com.bhst.wq.response.WqPeopleOrderResponse;
 import com.bhst.wq.service.WqPeopleOrderService;
 import com.bhst.wq.utils.UserUtils;
 import io.swagger.annotations.Api;
@@ -55,10 +56,12 @@ public class WqPeopleOrderController {
     @PostMapping("/ExecuteOrder")
     @ApiOperation(value = "执行订单")
     public Boolean ExecuteOrder(@Valid @RequestBody WqPeopleOrderDetailDelRequest request) {
-        WqPeopleOrder byId = wqPeopleOrderService.getById(request);
+        WqPeopleOrderResponse byId = wqPeopleOrderService.getById(request);
         if (null != request.getIsPass() && request.getIsPass()) {
             byId.setIsAudit(1);
-            return wqPeopleOrderService.saveOrUpdate(byId);
+            WqPeopleOrder wqPeopleOrder = new WqPeopleOrder();
+            BeanUtils.copyProperties(byId, wqPeopleOrder);
+            return wqPeopleOrderService.saveOrUpdate(wqPeopleOrder);
         }
         return false;
     }
@@ -71,7 +74,7 @@ public class WqPeopleOrderController {
 
     @PostMapping("/detail")
     @ApiOperation(value = "获取百姓点单详情")
-    public WqPeopleOrder detail(@Valid @RequestBody WqPeopleOrderDetailDelRequest request) {
+    public WqPeopleOrderResponse detail(@Valid @RequestBody WqPeopleOrderDetailDelRequest request) {
         return wqPeopleOrderService.getById(request);
     }
 
