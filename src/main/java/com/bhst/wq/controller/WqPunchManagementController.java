@@ -17,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/punch")
@@ -127,13 +129,13 @@ public class WqPunchManagementController {
 
     @PostMapping("/isParticipateActivities")
     @ApiOperation(value = "是否参加打卡活动")
-    public ResultBean<WqPunchManagement> isParticipateActivities(@Valid @RequestBody WqPunchManagementDetailDelRequest request) {
+    public ResultBean<Boolean> isParticipateActivities(@Valid @RequestBody WqPunchManagementDetailDelRequest request) {
         QueryWrapper<WqPunchManagement> queryWrapper = new QueryWrapper();
         queryWrapper.eq("activity_id", request.getId());
         queryWrapper.eq("user_id", UserUtils.getUserId());
         queryWrapper.eq("sign_up", "1");
-        WqPunchManagement wqPunchManagement = wqPunchManagementService.selectOneByTime(queryWrapper);
-        return new ResultBean<>(wqPunchManagement);
+        List<WqPunchManagement> list = wqPunchManagementService.list(queryWrapper);
+        return new ResultBean<>(!CollectionUtils.isEmpty(list));
     }
 
 }
