@@ -81,35 +81,33 @@ public class WqPunchManagementController {
             }
             return wqPunchManagementService.saveOrUpdate(wqPunchManagement);
         } else {
-            if (null != wqPunchManagement) {
-                if (request.getStatus().equals("1")) {
-                    wqPunchManagement.setStartTime(LocalDateTime.now());
-                    wqPunchManagement.setStatus(request.getStatus());
-                    wqPunchManagement.setUpdateTime(LocalDateTime.now());
-                    wqPunchManagementService.updateById(wqPunchManagement);
-                    WqActivityRecruitment byId = wqActivityRecruitmentService.getById(wqPunchManagement.getActivityId());
-                    if (null != byId) {
-                        byId.setParticipateNum(byId.getParticipateNum() + 1);
-                        wqActivityRecruitmentService.updateById(byId);
-                    }
-                    return true;
-                } else if (request.getStatus().equals("2")) {
-                    wqPunchManagement.setEndTime(LocalDateTime.now());
-                    wqPunchManagement.setStatus(request.getStatus());
-                    wqPunchManagement.setUpdateTime(LocalDateTime.now());
-                    Duration duration = Duration.between(wqPunchManagement.getStartTime(), wqPunchManagement.getEndTime());
-                    long time = duration.toMillis() / 1000;
-                    wqPunchManagement.setDuration(String.valueOf(time));
-                    wqPunchManagementService.updateById(wqPunchManagement);
-                    //更新用户积分
-                    WqUser wqUser = wqUserMapper.selectById(UserUtils.getUserId());
-                    if (null != wqUser) {
-                        wqUser.setIntegral((int) time / 60 / 60 + 1);
-                        wqUser.setServiceDuration(wqUser.getServiceDuration() + time);
-                    }
-                    wqUserMapper.updateById(wqUser);
-                    return true;
+            if (request.getStatus().equals("1")) {
+                wqPunchManagement.setStartTime(LocalDateTime.now());
+                wqPunchManagement.setStatus(request.getStatus());
+                wqPunchManagement.setUpdateTime(LocalDateTime.now());
+                wqPunchManagementService.updateById(wqPunchManagement);
+                WqActivityRecruitment byId = wqActivityRecruitmentService.getById(wqPunchManagement.getActivityId());
+                if (null != byId) {
+                    byId.setParticipateNum(byId.getParticipateNum() + 1);
+                    wqActivityRecruitmentService.updateById(byId);
                 }
+                return true;
+            } else if (request.getStatus().equals("2")) {
+                wqPunchManagement.setEndTime(LocalDateTime.now());
+                wqPunchManagement.setStatus(request.getStatus());
+                wqPunchManagement.setUpdateTime(LocalDateTime.now());
+                Duration duration = Duration.between(wqPunchManagement.getStartTime(), wqPunchManagement.getEndTime());
+                long time = duration.toMillis() / 1000;
+                wqPunchManagement.setDuration(String.valueOf(time));
+                wqPunchManagementService.updateById(wqPunchManagement);
+                //更新用户积分
+                WqUser wqUser = wqUserMapper.selectById(UserUtils.getUserId());
+                if (null != wqUser) {
+                    wqUser.setIntegral((int) time / 60 / 60 + 1);
+                    wqUser.setServiceDuration(wqUser.getServiceDuration() + time);
+                }
+                wqUserMapper.updateById(wqUser);
+                return true;
             }
         }
         return false;
@@ -124,7 +122,14 @@ public class WqPunchManagementController {
     @PostMapping("/detail")
     @ApiOperation(value = "获取打卡详情")
     public WqPunchManagement detail(@Valid @RequestBody WqPunchManagementDetailDelRequest request) {
-        return wqPunchManagementService.getById(request);
+        LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        QueryWrapper<WqPunchManagement> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("activity_id", request.getId());
+        queryWrapper.eq("user_id", UserUtils.getUserId());
+        queryWrapper.in("status", "1", "0");
+        queryWrapper.between("create_time", today_start, today_end);
+        return wqPunchManagementService.selectOneByTime(queryWrapper);
     }
 
     @PostMapping("/isParticipateActivities")
