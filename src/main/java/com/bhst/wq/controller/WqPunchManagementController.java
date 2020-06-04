@@ -58,27 +58,26 @@ public class WqPunchManagementController {
         QueryWrapper<WqPunchManagement> queryWrapper = new QueryWrapper();
         queryWrapper.eq("activity_id", request.getActivityId());
         queryWrapper.eq("user_id", UserUtils.getUserId());
+        queryWrapper.in("status", "1", "0");
         queryWrapper.between("create_time", today_start, today_end);
         WqPunchManagement wqPunchManagement = wqPunchManagementService.selectOneByTime(queryWrapper);
-        if (null == request.getId()) {
-            if (null == wqPunchManagement) {
-                wqPunchManagement = new WqPunchManagement();
-                BeanUtils.copyProperties(request, wqPunchManagement);
-                wqPunchManagement.setStartTime(LocalDateTime.now());
-                wqPunchManagement.setEndTime(LocalDateTime.now());
-                wqPunchManagement.setCreateTime(LocalDateTime.now());
-                wqPunchManagement.setUpdateTime(LocalDateTime.now());
-                wqPunchManagement.setUserId(UserUtils.getUserId());
-                WqActivityRecruitment byId = wqActivityRecruitmentService.getById(wqPunchManagement.getActivityId());
-                if (null != byId) {
-                    byId.setTotalNum(byId.getTotalNum() + 1);
-                    if (request.getStatus().equals("1")) {
-                        byId.setParticipateNum(byId.getParticipateNum() + 1);
-                    }
-                    wqActivityRecruitmentService.updateById(byId);
+        if (null == wqPunchManagement) {
+            wqPunchManagement = new WqPunchManagement();
+            BeanUtils.copyProperties(request, wqPunchManagement);
+            wqPunchManagement.setStartTime(LocalDateTime.now());
+            wqPunchManagement.setEndTime(LocalDateTime.now());
+            wqPunchManagement.setCreateTime(LocalDateTime.now());
+            wqPunchManagement.setUpdateTime(LocalDateTime.now());
+            wqPunchManagement.setUserId(UserUtils.getUserId());
+            WqActivityRecruitment byId = wqActivityRecruitmentService.getById(wqPunchManagement.getActivityId());
+            if (null != byId) {
+                byId.setTotalNum(byId.getTotalNum() + 1);
+                if (request.getStatus().equals("1")) {
+                    byId.setParticipateNum(byId.getParticipateNum() + 1);
                 }
-                return wqPunchManagementService.saveOrUpdate(wqPunchManagement);
+                wqActivityRecruitmentService.updateById(byId);
             }
+            return wqPunchManagementService.saveOrUpdate(wqPunchManagement);
         } else {
             if (null != wqPunchManagement) {
                 if (request.getStatus().equals("1")) {
@@ -129,12 +128,10 @@ public class WqPunchManagementController {
     @PostMapping("/isParticipateActivities")
     @ApiOperation(value = "是否参加打卡活动")
     public ResultBean<WqPunchManagement> isParticipateActivities(@Valid @RequestBody WqPunchManagementDetailDelRequest request) {
-        LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
-        LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         QueryWrapper<WqPunchManagement> queryWrapper = new QueryWrapper();
         queryWrapper.eq("activity_id", request.getId());
         queryWrapper.eq("user_id", UserUtils.getUserId());
-        queryWrapper.between("create_time", today_start, today_end);
+        queryWrapper.eq("sign_up", "1");
         WqPunchManagement wqPunchManagement = wqPunchManagementService.selectOneByTime(queryWrapper);
         return new ResultBean<>(wqPunchManagement);
     }
