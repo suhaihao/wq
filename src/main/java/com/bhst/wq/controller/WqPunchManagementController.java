@@ -121,7 +121,7 @@ public class WqPunchManagementController {
 
     @PostMapping("/detail")
     @ApiOperation(value = "获取打卡详情")
-    public WqPunchManagement detail(@Valid @RequestBody WqPunchManagementDetailDelRequest request) {
+    public ResultBean<WqPunchManagement> detail(@Valid @RequestBody WqPunchManagementDetailDelRequest request) {
         LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
         LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         QueryWrapper<WqPunchManagement> queryWrapper = new QueryWrapper();
@@ -129,7 +129,8 @@ public class WqPunchManagementController {
         queryWrapper.eq("user_id", UserUtils.getUserId());
         queryWrapper.in("status", "1", "0");
         queryWrapper.between("create_time", today_start, today_end);
-        return wqPunchManagementService.selectOneByTime(queryWrapper);
+        return new ResultBean<>(wqPunchManagementService.selectOneByTime(queryWrapper));
+
     }
 
     @PostMapping("/isParticipateActivities")
