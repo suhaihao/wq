@@ -45,7 +45,7 @@ public class WqPunchManagementController {
 
     @PostMapping("/getPageList")
     @ApiOperation(value = "获取打卡列表")
-    public IPage<WqPunchManagement> getPageList(@RequestBody WqPunchManagementPageListRequest request) {
+    public IPage<WqPunchManagement> getPageList(@Valid @RequestBody WqPunchManagementPageListRequest request) {
         return wqPunchManagementService.getPageList(request);
     }
 
