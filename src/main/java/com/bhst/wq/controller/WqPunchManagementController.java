@@ -59,7 +59,7 @@ public class WqPunchManagementController {
             wqPunchManagement.setEndTime(LocalDateTime.now());
             wqPunchManagement.setCreateTime(LocalDateTime.now());
             wqPunchManagement.setUpdateTime(LocalDateTime.now());
-
+            wqPunchManagement.setUserId(UserUtils.getUserId());
             WqActivityRecruitment byId = wqActivityRecruitmentService.getById(wqPunchManagement.getActivityId());
             if (null != byId) {
                 byId.setTotalNum(byId.getTotalNum() + 1);
