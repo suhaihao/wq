@@ -125,14 +125,14 @@ public class WqPunchManagementController {
 
     @PostMapping("/isParticipateActivities")
     @ApiOperation(value = "是否参加打卡活动")
-    public Boolean isParticipateActivities(@Valid @RequestBody WqPunchManagementDetailDelRequest request) {
+    public WqPunchManagement isParticipateActivities(@Valid @RequestBody WqPunchManagementDetailDelRequest request) {
         LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
         LocalDateTime today_start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         QueryWrapper<WqPunchManagement> queryWrapper = new QueryWrapper();
         queryWrapper.eq("activity_id", request.getId());
         queryWrapper.eq("user_id", UserUtils.getUserId());
         queryWrapper.between("create_time", today_start, today_end);
-        return null != wqPunchManagementService.selectOneByTime(queryWrapper);
+        return wqPunchManagementService.selectOneByTime(queryWrapper);
     }
 
 }
