@@ -30,6 +30,9 @@ public class WqPunchManagementServiceImpl extends ServiceImpl<WqPunchManagementM
         QueryWrapper<WqPunchManagement> queryWrapperUser = new QueryWrapper();
         queryWrapperUser.eq("user_id", UserUtils.getUserId());
         queryWrapperUser.orderByDesc("create_time");
+        if (null != request.getActivityId()) {
+            queryWrapperUser.eq("activity_id", request.getActivityId());
+        }
         return wqPunchManagementMapper.selectPage(page, queryWrapperUser);
     }
 

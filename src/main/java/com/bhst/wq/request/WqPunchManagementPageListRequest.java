@@ -17,4 +17,9 @@ public class WqPunchManagementPageListRequest {
 
     @ApiModelProperty("分页大小")
     private int pageSize = 20;
+
+    @NotNull(message = "活动id不能为空")
+    @ApiModelProperty("活动id ")
+    private Integer activityId;
+
 }
