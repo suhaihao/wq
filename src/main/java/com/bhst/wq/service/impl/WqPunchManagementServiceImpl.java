@@ -9,6 +9,7 @@ import com.bhst.wq.mapper.WqPunchManagementMapper;
 import com.bhst.wq.request.WqPunchManagementDetailDelRequest;
 import com.bhst.wq.request.WqPunchManagementPageListRequest;
 import com.bhst.wq.service.WqPunchManagementService;
+import com.bhst.wq.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class WqPunchManagementServiceImpl extends ServiceImpl<WqPunchManagementM
     public IPage<WqPunchManagement> getPageList(WqPunchManagementPageListRequest request) {
         Page<WqPunchManagement> page = new Page<>(request.getPageIndex(), request.getPageSize());
         QueryWrapper<WqPunchManagement> queryWrapperUser = new QueryWrapper();
+        queryWrapperUser.eq("user_id", UserUtils.getUserId());
         queryWrapperUser.orderByDesc("create_time");
         return wqPunchManagementMapper.selectPage(page, queryWrapperUser);
     }
