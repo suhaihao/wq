@@ -77,6 +77,9 @@ public class WqPunchManagementController {
                 if (Duration.between(LocalDateTime.now(), byId.getEndTime()).toMillis() < 0) {
                     throw new BusinessInterfaceException("活动已结束");
                 }
+                if (Duration.between(LocalDateTime.now(), byId.getStartTime()).toMillis() < 0) {
+                    throw new BusinessInterfaceException("活动未开始");
+                }
                 byId.setTotalNum(byId.getTotalNum() + 1);
                 if (request.getStatus().equals("1")) {
                     byId.setParticipateNum(byId.getParticipateNum() + 1);
