@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bhst.wq.entity.WqActivityRecruitment;
 import com.bhst.wq.entity.WqPunchManagement;
 import com.bhst.wq.entity.WqUser;
+import com.bhst.wq.exception.BusinessInterfaceException;
 import com.bhst.wq.mapper.WqUserMapper;
 import com.bhst.wq.request.WqPunchManagementAddRequest;
 import com.bhst.wq.request.WqPunchManagementDetailDelRequest;
@@ -73,6 +74,9 @@ public class WqPunchManagementController {
             wqPunchManagement.setUserId(UserUtils.getUserId());
             WqActivityRecruitment byId = wqActivityRecruitmentService.getById(wqPunchManagement.getActivityId());
             if (null != byId) {
+                if (Duration.between(LocalDateTime.now(), byId.getEndTime()).toMillis() < 0) {
+                    throw new BusinessInterfaceException("活动已结束");
+                }
                 byId.setTotalNum(byId.getTotalNum() + 1);
                 if (request.getStatus().equals("1")) {
                     byId.setParticipateNum(byId.getParticipateNum() + 1);
