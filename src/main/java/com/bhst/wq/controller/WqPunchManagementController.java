@@ -80,10 +80,10 @@ public class WqPunchManagementController {
             wqPunchManagement.setUserId(UserUtils.getUserId());
             WqActivityRecruitment byId = wqActivityRecruitmentService.getById(wqPunchManagement.getActivityId());
             if (null != byId) {
-                if (Duration.between(LocalDateTime.now(), byId.getEndTime()).toMillis() < 0) {
+                if (byId.getEndTime().isAfter(LocalDateTime.now())) {
                     throw new BusinessInterfaceException("活动已结束");
                 }
-                if (Duration.between(LocalDateTime.now(), byId.getStartTime()).toMillis() < 0) {
+                if (byId.getStartTime().isBefore(LocalDateTime.now())) {
                     throw new BusinessInterfaceException("活动未开始");
                 }
                 byId.setTotalNum(byId.getTotalNum() + 1);
