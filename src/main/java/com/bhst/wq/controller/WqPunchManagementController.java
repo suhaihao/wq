@@ -55,8 +55,8 @@ public class WqPunchManagementController {
 
     @PostMapping("/getUserPageList")
     @ApiOperation(value = "获取参加活动的用户的列表")
-    public IPage<WqUser> getUserPageList(@Valid @RequestBody WqPunchManagementPageListRequest request) {
-        return wqPunchManagementService.getUserPageList(request);
+    public ResultBean<IPage<WqUser>> getUserPageList(@Valid @RequestBody WqPunchManagementPageListRequest request) {
+        return new ResultBean<>(wqPunchManagementService.getUserPageList(request));
     }
 
     @PostMapping("/add")
