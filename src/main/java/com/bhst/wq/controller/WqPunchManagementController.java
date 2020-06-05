@@ -53,6 +53,12 @@ public class WqPunchManagementController {
         return wqPunchManagementService.getPageList(request);
     }
 
+    @PostMapping("/getUserPageList")
+    @ApiOperation(value = "获取参加活动的用户的列表")
+    public IPage<WqUser> getUserPageList(@Valid @RequestBody WqPunchManagementPageListRequest request) {
+        return wqPunchManagementService.getUserPageList(request);
+    }
+
     @PostMapping("/add")
     @ApiOperation(value = "添加修改打卡")
     public Boolean add(@RequestBody WqPunchManagementAddRequest request) {
