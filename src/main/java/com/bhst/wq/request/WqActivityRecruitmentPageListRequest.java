@@ -22,4 +22,7 @@ public class WqActivityRecruitmentPageListRequest {
     @ApiModelProperty("是否显示级别")
     private Boolean isRank;
 
+    @ApiModelProperty("是否当前用户招募活动")
+    private Boolean isUser;
+
 }
