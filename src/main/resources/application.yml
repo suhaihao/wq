@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 1024MB
 
 task:
   pool:
@@ -12,6 +16,7 @@ task:
     keep-alive-seconds: 60
     # 队列容量
     queue-capacity: 50
+
 
 logging:
   config: classpath:logback-spring-${spring.profiles.active}.xml

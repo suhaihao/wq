@@ -7,6 +7,7 @@ import com.bhst.wq.request.WqActivityRecruitmentAddRequest;
 import com.bhst.wq.request.WqActivityRecruitmentDetailDelRequest;
 import com.bhst.wq.request.WqActivityRecruitmentPageListRequest;
 import com.bhst.wq.service.WqActivityRecruitmentService;
+import com.bhst.wq.utils.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -43,6 +44,7 @@ public class WqActivityRecruitmentController {
         WqActivityRecruitment wqActivityRecruitment = new WqActivityRecruitment();
         BeanUtils.copyProperties(request, wqActivityRecruitment);
         wqActivityRecruitment.setUpdateTiem(LocalDateTime.now());
+        wqActivityRecruitment.setCreateBy(UserUtils.getUserId());
         return wqActivityRecruitmentService.saveOrUpdate(wqActivityRecruitment);
     }
 
