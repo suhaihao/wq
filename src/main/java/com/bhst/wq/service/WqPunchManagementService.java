@@ -3,10 +3,13 @@ package com.bhst.wq.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bhst.wq.entity.WqActivityRecruitment;
 import com.bhst.wq.entity.WqPunchManagement;
 import com.bhst.wq.entity.WqUser;
 import com.bhst.wq.request.WqPunchManagementDetailDelRequest;
 import com.bhst.wq.request.WqPunchManagementPageListRequest;
+
+import java.util.List;
 
 public interface WqPunchManagementService extends IService<WqPunchManagement> {
 
@@ -45,4 +48,11 @@ public interface WqPunchManagementService extends IService<WqPunchManagement> {
      * @return
      */
     WqPunchManagement selectOneByTime(QueryWrapper<WqPunchManagement> queryWrapper);
+
+    /**
+     * 查询用户参加过的活动列表
+     * @param request
+     * @return
+     */
+    List<WqActivityRecruitment> getByUserActivity(WqPunchManagementPageListRequest request);
 }

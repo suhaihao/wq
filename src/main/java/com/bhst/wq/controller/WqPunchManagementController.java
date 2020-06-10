@@ -158,4 +158,11 @@ public class WqPunchManagementController {
         return new ResultBean<>(!CollectionUtils.isEmpty(list));
     }
 
+
+    @PostMapping("/getPageActivityList")
+    @ApiOperation(value = "获取用户参加过的活动列表")
+    public ResultBean<List<WqActivityRecruitment>> getPageNoticeList(@RequestBody WqPunchManagementPageListRequest request) {
+        return new ResultBean<>(wqPunchManagementService.getByUserActivity(request));
+    }
+
 }

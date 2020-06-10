@@ -22,4 +22,7 @@ public class WqPunchManagementPageListRequest {
     @ApiModelProperty("活动id ")
     private Integer activityId;
 
+    @ApiModelProperty("参加类型（0未报名1已报名）")
+    private String signUp;
+
 }

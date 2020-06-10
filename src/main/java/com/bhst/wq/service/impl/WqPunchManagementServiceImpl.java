@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bhst.wq.entity.WqActivityRecruitment;
 import com.bhst.wq.entity.WqPunchManagement;
 import com.bhst.wq.entity.WqUser;
+import com.bhst.wq.mapper.WqActivityRecruitmentMapper;
 import com.bhst.wq.mapper.WqPunchManagementMapper;
 import com.bhst.wq.mapper.WqUserMapper;
 import com.bhst.wq.request.WqPunchManagementDetailDelRequest;
@@ -15,6 +17,7 @@ import com.bhst.wq.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,12 +27,14 @@ public class WqPunchManagementServiceImpl extends ServiceImpl<WqPunchManagementM
 
     private final WqPunchManagementMapper wqPunchManagementMapper;
     private final WqUserMapper wqUserMapper;
+    private final WqActivityRecruitmentMapper wqActivityRecruitmentMapper;
 
 
     @Autowired
-    public WqPunchManagementServiceImpl(WqPunchManagementMapper wqPunchManagementMapper, WqUserMapper wqUserMapper) {
+    public WqPunchManagementServiceImpl(WqPunchManagementMapper wqPunchManagementMapper, WqUserMapper wqUserMapper, WqActivityRecruitmentMapper wqActivityRecruitmentMapper) {
         this.wqPunchManagementMapper = wqPunchManagementMapper;
         this.wqUserMapper = wqUserMapper;
+        this.wqActivityRecruitmentMapper = wqActivityRecruitmentMapper;
     }
 
     @Override
@@ -74,6 +79,23 @@ public class WqPunchManagementServiceImpl extends ServiceImpl<WqPunchManagementM
     @Override
     public WqPunchManagement selectOneByTime(QueryWrapper<WqPunchManagement> queryWrapper) {
         return wqPunchManagementMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public List<WqActivityRecruitment> getByUserActivity(WqPunchManagementPageListRequest request) {
+        QueryWrapper<WqPunchManagement> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_id", UserUtils.getUserId());
+        if (StringUtils.isEmpty(request.getSignUp())) {
+            queryWrapper.eq("status", request.getSignUp());
+        }
+        queryWrapper.groupBy("activity_id");
+        queryWrapper.select("activity_id");
+        List<WqPunchManagement> wqPunchManagements = wqPunchManagementMapper.selectList(queryWrapper);
+        if (!CollectionUtils.isEmpty(wqPunchManagements)) {
+            List<Integer> collect = wqPunchManagements.stream().map(WqPunchManagement::getActivityId).collect(Collectors.toList());
+            return wqActivityRecruitmentMapper.selectBatchIds(collect);
+        }
+        return null;
     }
 
 }
