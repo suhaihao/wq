@@ -45,6 +45,8 @@ public class WqActivityRecruitmentController {
         BeanUtils.copyProperties(request, wqActivityRecruitment);
         wqActivityRecruitment.setUpdateTiem(LocalDateTime.now());
         wqActivityRecruitment.setCreateBy(UserUtils.getUserId());
+        wqActivityRecruitment.setCreateTime(LocalDateTime.now());
+        wqActivityRecruitment.setLikes(0);
         return wqActivityRecruitmentService.saveOrUpdate(wqActivityRecruitment);
     }
 

@@ -41,7 +41,7 @@ public class WqActivityRecruitment {
 
     @ApiModelProperty("总人数")
     @TableField(value = "total_num")
-    private String totalNum;
+    private Integer totalNum;
 
     @ApiModelProperty("联系人")
     @TableField(value = "contacts")
@@ -108,7 +108,7 @@ public class WqActivityRecruitment {
     private Integer status;
 
     @ApiModelProperty("喜欢次数")
-    @TableField(value = "status")
+    @TableField(value = "likes")
     private Integer likes;
 
     @ApiModelProperty("是否审核0没有1有")
