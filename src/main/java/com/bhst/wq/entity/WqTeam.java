@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel("队伍")
-@TableName("wq_team")
+@TableName("rx_team")
 public class WqTeam {
 
     @ApiModelProperty("唯一id")
