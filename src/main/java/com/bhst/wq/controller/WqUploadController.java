@@ -48,9 +48,9 @@ public class WqUploadController {
         if (!types.contains(contentType)) {
             throw new BusinessInterfaceException("上传失败！不允许上传此类型的文件！");
         }
-        String parentDir = request.getServletContext().getRealPath("upload");
+        String parentDir = request.getSession().getServletContext().getRealPath("upload");
         log.info("文件路径为:{}", parentDir);
-        File parent = new File(parentDir);
+        File parent = new File("/home/xucy/myfile/myjar/libin/app/wq/app/static/imgs/");
         if (!parent.exists()) {
             parent.mkdirs();
         }
@@ -67,7 +67,7 @@ public class WqUploadController {
         File dest = new File(parent, filename + suffix);
         file.transferTo(dest);
         log.info("上传结束");
-        return new ResultBean<>(filename);
+        return new ResultBean<>(filename + suffix);
     }
 
 }
