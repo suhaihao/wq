@@ -1,5 +1,6 @@
 package com.bhst.wq.controller;
 
+import com.bhst.wq.constants.Constants;
 import com.bhst.wq.exception.BusinessInterfaceException;
 import com.bhst.wq.response.ResultBean;
 import io.swagger.annotations.Api;
@@ -35,7 +36,7 @@ public class WqUploadController {
 
         long fileSize = file.getSize();
         log.info("文件大小:{}", fileSize);
-        if (fileSize > 1 * 1024 * 1024) {
+        if (fileSize > Constants.fileSize) {
             throw new BusinessInterfaceException("上传失败！上传的文件大小超出了限制！");
         }
 
