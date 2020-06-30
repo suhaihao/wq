@@ -42,13 +42,13 @@ public class WqUploadController {
 
         String contentType = file.getContentType();
         log.info("文件类型:{}", contentType);
-        List<String> types = new ArrayList<>();
-        types.add("image/jpeg");
-        types.add("image/png");
-        types.add("image/gif");
-        if (!types.contains(contentType)) {
-            throw new BusinessInterfaceException("上传失败！不允许上传此类型的文件！");
-        }
+//        List<String> types = new ArrayList<>();
+//        types.add("image/jpeg");
+//        types.add("image/png");
+//        types.add("image/gif");
+//        if (!types.contains(contentType)) {
+//            throw new BusinessInterfaceException("上传失败！不允许上传此类型的文件！");
+//        }
         String parentDir = request.getSession().getServletContext().getRealPath("upload");
         log.info("文件路径为:{}", parentDir);
         File parent = new File("/home/xucy/myfile/myjar/libin/app/wq/app/static/imgs/");
