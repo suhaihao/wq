@@ -25,12 +25,16 @@ public class ScheduledTaskUtils {
         LocalDateTime now = LocalDateTime.now();
         for (WqActivityRecruitment wqActivityRecruitment : list) {
             if (Duration.between(wqActivityRecruitment.getStartTime(), now).toMinutes() > 0 && Duration.between(wqActivityRecruitment.getEndTime(), now).toMinutes() < 0) {
-                wqActivityRecruitment.setStatus(1);
-                updateList.add(wqActivityRecruitment);
+                if (wqActivityRecruitment.getStatus() != 1) {
+                    wqActivityRecruitment.setStatus(1);
+                    updateList.add(wqActivityRecruitment);
+                }
             }
             if (Duration.between(wqActivityRecruitment.getEndTime(), now).toMinutes() > 0) {
-                wqActivityRecruitment.setStatus(2);
-                updateList.add(wqActivityRecruitment);
+                if (wqActivityRecruitment.getStatus() != 2) {
+                    wqActivityRecruitment.setStatus(2);
+                    updateList.add(wqActivityRecruitment);
+                }
             }
         }
         wqActivityRecruitmentService.updateBatchById(updateList);
