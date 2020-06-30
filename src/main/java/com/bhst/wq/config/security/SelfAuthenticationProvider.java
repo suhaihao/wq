@@ -27,6 +27,9 @@ public class SelfAuthenticationProvider implements AuthenticationProvider {
         String ps = encoder.encode(password);
 
         WqUser wqUser = wqUserService.loginByUserName(username);
+        if (null == wqUser) {
+            throw new BadCredentialsException("用户不正确");
+        }
         if (!StringUtils.isEmpty(wqUser.getPassword())) {
             if (!wqUser.getPassword().equals(ps)) {
                 throw new BadCredentialsException("用户名密码不正确，请重新登陆！");
