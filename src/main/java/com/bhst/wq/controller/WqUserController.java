@@ -58,7 +58,7 @@ public class WqUserController {
     }
 
     @PostMapping("/ranking")
-    @ApiOperation(value = "获取团队排行")
+    @ApiOperation(value = "获取个人排行")
     public IPage<WqUserResponse> ranking(@Valid @RequestBody WqUserPageListRequest request) {
         return wqUserService.getRankingPageList(request);
     }
