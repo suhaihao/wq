@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,6 +43,7 @@ public class WqUserController {
     public Boolean add(@RequestBody WqUserAddRequest request) {
         WqUser WqUser = new WqUser();
         BeanUtils.copyProperties(request, WqUser);
+        WqUser.setPassword(new BCryptPasswordEncoder().encode(WqUser.getPassword()));
         return wqUserService.saveOrUpdate(WqUser);
     }
 

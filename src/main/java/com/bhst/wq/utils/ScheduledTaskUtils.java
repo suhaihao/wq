@@ -4,6 +4,7 @@ import com.bhst.wq.entity.WqActivityRecruitment;
 import com.bhst.wq.service.WqActivityRecruitmentService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -37,6 +38,8 @@ public class ScheduledTaskUtils {
                 }
             }
         }
-        wqActivityRecruitmentService.updateBatchById(updateList);
+        if (!CollectionUtils.isEmpty(updateList)) {
+            wqActivityRecruitmentService.updateBatchById(updateList);
+        }
     }
 }
