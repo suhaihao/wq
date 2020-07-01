@@ -16,5 +16,9 @@ public class WqLikesRecordQueryRequest {
     @ApiModelProperty("类型")
     private Integer type;
 
+    @NotNull(message = "类型id不能为空")
+    @ApiModelProperty("类型id")
+    private Integer typeId;
+
 
 }

@@ -24,6 +24,7 @@ public class WqLikesRecordServiceImpl extends ServiceImpl<WqLikesRecordMapper, W
     public Boolean getByUserAndType(WqLikesRecordQueryRequest request) {
         QueryWrapper<WqLikesRecord> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("type", request.getType());
+        queryWrapper.eq("type_id", request.getTypeId());
         queryWrapper.eq("user_id", UserUtils.getUserId());
         return CollectionUtils.isEmpty(wqLikesRecordMapper.selectList(queryWrapper));
     }
