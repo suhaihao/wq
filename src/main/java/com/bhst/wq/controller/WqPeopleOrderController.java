@@ -16,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -54,7 +55,12 @@ public class WqPeopleOrderController {
                 queryWrapper.eq("phone", request.getPhone());
                 WqUser one = wqUserService.getOne(queryWrapper);
                 if (null == one) {
-                    throw new BusinessInterfaceException("手机号不正确");
+                    one = new WqUser();
+                    one.setNickname(request.getName());
+                    one.setFullname(request.getName());
+                    one.setPhone(request.getPhone());
+                    one.setPassword(new BCryptPasswordEncoder().encode("123"));
+                    wqUserService.save(one);
                 }
                 wqPeopleOrder.setCreateBy(String.valueOf(one.getId()));
             } else {
