@@ -168,11 +168,10 @@
     <!-- 4. 最终的策略 -->
     <!-- 4.1 开发环境:打印控制台-->
     <springProfile name="dev">
-        <logger name="com.nmys.view" level="info"/>
+        <logger name="com.nmys.view" level="debug"/>
     </springProfile>
 
-    <root level="debug">
-        <appender-ref ref="CONSOLE" />
+    <root level="info">
         <appender-ref ref="DEBUG_FILE" />
         <appender-ref ref="INFO_FILE" />
         <appender-ref ref="WARN_FILE" />
