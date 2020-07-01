@@ -89,6 +89,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/ranking").permitAll()
                 .antMatchers("/user/add").permitAll()
                 .antMatchers("/order/add").permitAll()
+                .antMatchers("/order/detail").permitAll()
+                .antMatchers("/order/getPageList").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .anyRequest()
