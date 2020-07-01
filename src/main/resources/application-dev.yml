@@ -31,34 +31,24 @@ spring:
       test-on-return: false
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 20
-      # 配置监控统计拦截的filters
-#      filters: stat
-#      stat-view-servlet:
-#        url-pattern: /druid/*
-#        reset-enable: false
-#        allow: 127.0.0.1
-#        deny: 192.168.31.253
-#        login-username: root
-#        login-password: 123
-#      web-stat-filter:
-#        url-pattern: /*
-#        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+
 
 #mybatis-plus
 mybatis-plus:
-  global-config:
-    db-config:
-      id-type: auto
-      field-strategy: not_empty
-      column-underline: true
-      logic-delete-value: 0
-      logic-not-delete-value: 1
-      db-type: mysql
-    refresh: false
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: false
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+        #驼峰下划线转换
+      column-underline: true
+        #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      db-type: mysql
+    refresh: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
 
 #是否开启 swagger-ui
 swagger:
