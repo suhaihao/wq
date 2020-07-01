@@ -78,9 +78,6 @@ public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> impleme
             queryWrapper.eq("phone", username);
         }
         WqUser wqUser = wqUserMapper.selectOne(queryWrapper);
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String ps = encoder.encode("123");
-        wqUser.setPassword(ps);
         return wqUser;
     }
 }
