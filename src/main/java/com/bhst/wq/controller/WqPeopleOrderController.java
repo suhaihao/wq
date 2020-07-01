@@ -50,18 +50,16 @@ public class WqPeopleOrderController {
         BeanUtils.copyProperties(request, wqPeopleOrder);
         wqPeopleOrder.setUpdateTime(LocalDateTime.now());
         if (null == wqPeopleOrder.getId()) {
-            if (UserUtils.getUser() == null) {
-                QueryWrapper<WqUser> queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("phone", request.getPhone());
-                WqUser one = wqUserService.getOne(queryWrapper);
-                if (null == one) {
-                    one = new WqUser();
-                    one.setNickname(request.getName());
-                    one.setFullname(request.getName());
-                    one.setPhone(request.getPhone());
-                    one.setPassword(new BCryptPasswordEncoder().encode("123"));
-                    wqUserService.save(one);
-                }
+            QueryWrapper<WqUser> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("phone", request.getPhone());
+            WqUser one = wqUserService.getOne(queryWrapper);
+            if (one == null) {
+                one = new WqUser();
+                one.setNickname(request.getName());
+                one.setFullname(request.getName());
+                one.setPhone(request.getPhone());
+                one.setPassword(new BCryptPasswordEncoder().encode("123"));
+                wqUserService.save(one);
                 wqPeopleOrder.setCreateBy(String.valueOf(one.getId()));
             } else {
                 wqPeopleOrder.setCreateBy(String.valueOf(UserUtils.getUserId()));
@@ -69,11 +67,11 @@ public class WqPeopleOrderController {
         } else {
             WqPeopleOrder byId = wqPeopleOrderService.getById(wqPeopleOrder.getId());
             if (null != byId) {
-                if (UserUtils.getUser() == null) {
-                    QueryWrapper<WqUser> queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("phone", request.getPhone());
-                    WqUser one = wqUserService.getOne(queryWrapper);
-                    wqPeopleOrder.setCreateBy(String.valueOf(one.getId()));
+                QueryWrapper<WqUser> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("phone", request.getPhone());
+                WqUser one = wqUserService.getOne(queryWrapper);
+                if (one != null) {
+                    wqPeopleOrder.setUserId(one.getId());
                 } else {
                     wqPeopleOrder.setUserId(UserUtils.getUserId());
                 }
