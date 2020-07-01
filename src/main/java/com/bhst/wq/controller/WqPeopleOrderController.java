@@ -1,12 +1,16 @@
 package com.bhst.wq.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bhst.wq.entity.WqPeopleOrder;
+import com.bhst.wq.entity.WqUser;
+import com.bhst.wq.exception.BusinessInterfaceException;
 import com.bhst.wq.request.WqPeopleOrderAddRequest;
 import com.bhst.wq.request.WqPeopleOrderDetailDelRequest;
 import com.bhst.wq.request.WqPeopleOrderPageListRequest;
 import com.bhst.wq.response.WqPeopleOrderResponse;
 import com.bhst.wq.service.WqPeopleOrderService;
+import com.bhst.wq.service.WqUserService;
 import com.bhst.wq.utils.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,10 +28,12 @@ import java.time.LocalDateTime;
 public class WqPeopleOrderController {
 
     private final WqPeopleOrderService wqPeopleOrderService;
+    private final WqUserService wqUserService;
 
     @Autowired
-    public WqPeopleOrderController(WqPeopleOrderService wqPeopleOrderService) {
+    public WqPeopleOrderController(WqPeopleOrderService wqPeopleOrderService, WqUserService wqUserService) {
         this.wqPeopleOrderService = wqPeopleOrderService;
+        this.wqUserService = wqUserService;
     }
 
     @PostMapping("/getPageList")
@@ -43,11 +49,28 @@ public class WqPeopleOrderController {
         BeanUtils.copyProperties(request, wqPeopleOrder);
         wqPeopleOrder.setUpdateTime(LocalDateTime.now());
         if (null == wqPeopleOrder.getId()) {
-            wqPeopleOrder.setCreateBy(String.valueOf(UserUtils.getUserId()));
+            if (UserUtils.getUser() == null) {
+                QueryWrapper<WqUser> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("phone", request.getPhone());
+                WqUser one = wqUserService.getOne(queryWrapper);
+                if (null == one) {
+                    throw new BusinessInterfaceException("手机号不正确");
+                }
+                wqPeopleOrder.setCreateBy(String.valueOf(one.getId()));
+            } else {
+                wqPeopleOrder.setCreateBy(String.valueOf(UserUtils.getUserId()));
+            }
         } else {
             WqPeopleOrder byId = wqPeopleOrderService.getById(wqPeopleOrder.getId());
             if (null != byId) {
-                wqPeopleOrder.setUserId(UserUtils.getUserId());
+                if (UserUtils.getUser() == null) {
+                    QueryWrapper<WqUser> queryWrapper = new QueryWrapper<>();
+                    queryWrapper.eq("phone", request.getPhone());
+                    WqUser one = wqUserService.getOne(queryWrapper);
+                    wqPeopleOrder.setCreateBy(String.valueOf(one.getId()));
+                } else {
+                    wqPeopleOrder.setUserId(UserUtils.getUserId());
+                }
             }
         }
         return wqPeopleOrderService.saveOrUpdate(wqPeopleOrder);
