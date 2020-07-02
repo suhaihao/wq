@@ -10,6 +10,7 @@ import com.bhst.wq.request.WqUserDetailDelRequest;
 import com.bhst.wq.request.WqUserPageListRequest;
 import com.bhst.wq.response.WqUserResponse;
 import com.bhst.wq.service.WqUserService;
+import com.bhst.wq.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -43,7 +44,7 @@ public class WqUserServiceImpl extends ServiceImpl<WqUserMapper, WqUser> impleme
 
     @Override
     public WqUser getById(WqUserDetailDelRequest request) {
-        return wqUserMapper.selectById(request.getId());
+        return wqUserMapper.selectById(UserUtils.getUserId());
     }
 
     @Override
