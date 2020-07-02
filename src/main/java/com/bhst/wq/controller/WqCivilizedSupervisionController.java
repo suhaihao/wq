@@ -62,7 +62,7 @@ public class WqCivilizedSupervisionController {
     @ApiOperation(value = "点赞")
     public Boolean addLike(@Valid @RequestBody WqCivilizedSupervisionDetailDelRequest request) {
         WqLikesRecord wqLikesRecord = new WqLikesRecord();
-        wqLikesRecord.setType(3);
+        wqLikesRecord.setType(1);
         wqLikesRecord.setTypeId(request.getId());
         wqLikesRecord.setUserId(UserUtils.getUserId());
         wqLikesRecord.setSize(request.getDislikes());
