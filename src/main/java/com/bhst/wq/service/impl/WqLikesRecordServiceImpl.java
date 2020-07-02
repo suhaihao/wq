@@ -23,9 +23,11 @@ public class WqLikesRecordServiceImpl extends ServiceImpl<WqLikesRecordMapper, W
     @Override
     public Boolean getByUserAndType(WqLikesRecordQueryRequest request) {
         QueryWrapper<WqLikesRecord> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("sum(size) size");
         queryWrapper.eq("type", request.getType());
         queryWrapper.eq("type_id", request.getTypeId());
         queryWrapper.eq("user_id", UserUtils.getUserId());
-        return CollectionUtils.isEmpty(wqLikesRecordMapper.selectList(queryWrapper));
+        WqLikesRecord wqLikesRecord = wqLikesRecordMapper.selectOne(queryWrapper);
+        return wqLikesRecord == null ? false : wqLikesRecord.getSize() > 0;
     }
 }
