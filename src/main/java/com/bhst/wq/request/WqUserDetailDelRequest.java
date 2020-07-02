@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel("用户详情请求体")
 public class WqUserDetailDelRequest {
+
     @ApiModelProperty("唯一id")
     private Integer id;
 }
