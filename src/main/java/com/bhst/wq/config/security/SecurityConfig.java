@@ -75,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/activity/getPageList").permitAll()
+                .antMatchers("/activity/detailWqActivityRecruitment").permitAll()
                 .antMatchers("/classroom/**").permitAll()
                 .antMatchers("/supervisor/**").permitAll()
                 .antMatchers("/media/**").permitAll()
