@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -44,6 +45,7 @@ public class WqUserController {
         WqUser WqUser = new WqUser();
         BeanUtils.copyProperties(request, WqUser);
         WqUser.setPassword(new BCryptPasswordEncoder().encode(WqUser.getPassword()));
+        WqUser.setCreateTime(LocalDateTime.now());
         return wqUserService.saveOrUpdate(WqUser);
     }
 
