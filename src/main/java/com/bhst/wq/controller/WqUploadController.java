@@ -51,7 +51,7 @@ public class WqUploadController {
 //        }
         String parentDir = request.getSession().getServletContext().getRealPath("upload");
         log.info("文件路径为:{}", parentDir);
-        File parent = new File("/home/xucy/myfile/myjar/libin/app/wq/app/static/imgs/");
+        File parent = new File("/home/app/wq/app/static/imgs/");
         if (!parent.exists()) {
             parent.mkdirs();
         }
