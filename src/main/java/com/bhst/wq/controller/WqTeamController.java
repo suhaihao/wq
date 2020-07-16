@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(value = "/team")
@@ -39,6 +40,7 @@ public class WqTeamController {
     public Boolean add(@RequestBody WqTeamAddRequest request) {
         WqTeam WqTeam = new WqTeam();
         BeanUtils.copyProperties(request, WqTeam);
+        WqTeam.setCreateTime(LocalDateTime.now());
         return wqTeamService.saveOrUpdate(WqTeam);
     }
 
