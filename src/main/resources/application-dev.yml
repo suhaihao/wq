@@ -9,9 +9,9 @@ spring:
     druid:
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://182.61.181.98:3306/newdata?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
-      username: newdata
-      password: nWGNKPwmZJyGN2ii
+      url: jdbc:mysql://47.93.54.0:3306/wq?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
+      username: root
+      password: 1990101lB
 
       # 初始化配置
       initial-size: 3
